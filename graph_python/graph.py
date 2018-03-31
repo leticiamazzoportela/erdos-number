@@ -23,25 +23,27 @@ class Graph(object):
 
         new_edge = edge.Edge(source, destination, label=None, value=None)
 
-        # insert source
-        if new_edge.get_source() not in self.__adjacent_list:
-            self.__adjacent_list[new_edge.get_source()] = []
-        # insert destination
-        if new_edge.get_destination() not in self.__adjacent_list:
-            self.__adjacent_list[new_edge.get_destination()] = []
+        if destination not in self.__adjacent_list[source]:
+            # insert source
+            if new_edge.get_source() not in self.__adjacent_list:
+                self.__adjacent_list[new_edge.get_source()] = []
+            # insert destination
+            if new_edge.get_destination() not in self.__adjacent_list:
+                self.__adjacent_list[new_edge.get_destination()] = []
 
-        # insert edge and update adjacent list
-        self.__edges[(new_edge.get_source(),
-                      new_edge.get_destination())] = new_edge
-        self.__adjacent_list[new_edge.get_source()].append(
-            new_edge.get_destination())
+            # insert edge and update adjacent list
+            self.__edges[(new_edge.get_source(),
+                          new_edge.get_destination())] = new_edge
+            self.__adjacent_list[new_edge.get_source()].append(
+                new_edge.get_destination())
 
         # if not directed.. do the same with the other node
         if not self.__directed:
-            self.__edges[(new_edge.get_destination(),
-                          new_edge.get_source())] = new_edge
-            self.__adjacent_list[new_edge.get_destination()].append(
-                new_edge.get_source())
+            if source not in self.__adjacent_list[destination]:
+                self.__edges[(new_edge.get_destination(),
+                              new_edge.get_source())] = new_edge
+                self.__adjacent_list[new_edge.get_destination()].append(
+                    new_edge.get_source())
 
     def remove_edge(self, edge_to_remove):
         "Remove a edge from the graph"
