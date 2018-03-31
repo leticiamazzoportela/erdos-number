@@ -56,9 +56,22 @@ def main():
         # caso não exista Erdos.. todos os numeros sao infinitos
         if not gp[key].get_vertex('P. Erdos'):
             for author in gp[key].get_all_vertex():
-                print(author, ": infinito")
+                print(author, ": infinito", sep='')
         else:
-            pass  # fazer a busca em largura
+            authors = gp[key].get_all_vertex()
+            # authors.sort() # Ordenar authores
+
+            distanciaAteErdos = gp[key].breadth_search(
+                gp[key].get_vertex('P. Erdos'))
+
+            # print(distanciaAteErdos)
+            # gp[key].print_adjacent_list()
+
+            for author in authors:
+                if distanciaAteErdos[author] == float("inf"):
+                    print(author, ": infinito", sep='')
+                else:
+                    print(author, ": ", distanciaAteErdos[author], sep='')
 
 
 if __name__ == '__main__':

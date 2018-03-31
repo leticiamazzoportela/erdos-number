@@ -3,7 +3,6 @@
 '''
 
 import queue
-import sys
 import vertex
 import edge
 
@@ -126,7 +125,7 @@ class Graph(object):
             if key != initial_vertex:
                 # seta cor branca p/ todos, menos o vertex inicial
                 key.set_color(0)
-                self.__distance[key] = sys.maxint
+                self.__distance[key] = float("inf")
                 self.__predecessors[key] = None
 
         initial_vertex.set_color(1)  # seta cor do initial_vertex p cinza
@@ -136,13 +135,16 @@ class Graph(object):
 
         while not q.empty():  # enquanto a fila nao estiver vazia
             vertex = q.get()
+
             for v in self.__adjacent_list[vertex]:
                 if v.get_color() == 0:  # igual a branco
                     v.set_color(1)  # seta p/ cinza
                     self.__distance[v] = self.__distance[vertex] + 1
                     self.__predecessors[v] = vertex
-                    q.put(vertex, v)
+                    q.put(v)
             vertex.set_color(2)  # seta p/ preto
+
+        return self.__distance
 
     def degree_vertex(self, vertex):
         "Get the degree of a vertex"
