@@ -128,6 +128,9 @@ class Graph(object):
                 self.__distance[key] = float("inf")
                 self.__predecessors[key] = None
 
+        if not initial_vertex:
+            return self.__distance
+
         initial_vertex.set_color(1)  # seta cor do initial_vertex p cinza
         self.__distance[initial_vertex] = 0
         q = queue.Queue()
