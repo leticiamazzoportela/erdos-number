@@ -59,7 +59,7 @@ def main():
                 print(author, ": infinito", sep='')
         else:
             authors = gp[key].get_all_vertex()
-            sorted(authors, key=cmp_to_key(compare))  # Ordenar authores
+            authors = sorted(authors, key=cmp_to_key(compare))
 
             distanciaAteErdos = gp[key].breadth_search(
                 gp[key].get_vertex('P. Erdos'))
@@ -77,17 +77,22 @@ def main():
 def compare(item1, item2):
     # P. Erdos
     # 0123
-    if item1.get_name()[3:] < item2.get_name()[3:]:
-        return -1
-    elif item1.get_name()[3:] > item2.get_name()[3:]:
+    name1 = item1.get_name()
+    name2 = item2.get_name()
+
+    lastname1 = name1[3:]
+    lastname2 = name2[3:]
+
+    if lastname1 == lastname2:
+        if name1[0] < name2[0]:
+            return -1
+        else:
+            return 1
+
+    if max(lastname1, lastname2) == lastname1:
         return 1
     else:
-        if item1.get_name()[0] < item2.get_name()[0]:
-            return -1
-        elif item1.get_name()[0] > item2.get_name()[0]:
-            return 1
-        else:
-            return 0
+        return -1
 
 
 def cmp_to_key(mycmp):
@@ -105,14 +110,14 @@ def cmp_to_key(mycmp):
         def __eq__(self, other):
             return mycmp(self.obj, other.obj) == 0
 
-        def __le__(self, other):
-            return mycmp(self.obj, other.obj) <= 0
+        # def __le__(self, other):
+        #     return mycmp(self.obj, other.obj) <= 0
 
-        def __ge__(self, other):
-            return mycmp(self.obj, other.obj) >= 0
+        # def __ge__(self, other):
+        #     return mycmp(self.obj, other.obj) >= 0
 
-        def __ne__(self, other):
-            return mycmp(self.obj, other.obj) != 0
+        # def __ne__(self, other):
+        #     return mycmp(self.obj, other.obj) != 0
     return K
 
 
